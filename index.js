@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
 const WebSocket = require('ws');
+const cors = require('cors')
 
 const wss = new WebSocket.Server({ server: http });
 
