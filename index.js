@@ -7,6 +7,15 @@ const wss = new WebSocket.Server({ server: http });
 
 app.use(express.static(__dirname + '/public'));
 
+app.use(cors())
+
+app.get('/', (req, res) => {
+    return res.status(200).json({
+        title: "Express Testing",
+        message: "The app is working properly!",
+    });
+})
+
 wss.on('connection', (socket) => {
     console.log('A user connected');
 
