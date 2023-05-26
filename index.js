@@ -17,6 +17,14 @@ app.get('/', (req, res) => {
     });
 })
 
+
+app.post('/', (req, res) => {
+    return res.status(200).json({
+        title: "Express Testing",
+        message: "The app is working properly!",
+    });
+})
+
 wss.on('connection', (socket) => {
     console.log('A user connected');
 
