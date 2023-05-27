@@ -22,6 +22,30 @@ app.get('/', (req, res) => {
     });
 })
 
+const ProductQC = mongoose.model(
+    "ProductQC",
+    mongoose.Schema({
+        rfid_key: {
+            type: String,
+        },
+        humidity: {
+            type: String,
+        },
+        temperature: {
+            type: String,
+        },
+    })
+);
+
+app.get('/data', async (req, res) => {
+    try {
+        const datas = await ProductQC.findOne()
+        return res.status(200).json({ datas });
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+})
+
 
 app.post('/', (req, res) => {
     return res.status(200).json({
@@ -40,11 +64,11 @@ const port = process.env.PORT || 5000;
 const server = http.createServer(app);
 
 mongoose.connect(process.env.MONGODB_URL).then(() => {
-  console.log("Mongodb connected");
-  server.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
-  });
+    console.log("Mongodb connected");
+    server.listen(port, () => {
+        console.log(`Server is listening on port ${port}`);
+    });
 }).catch((err) => {
-  console.log({ err });
-  process.exit(1);
+    console.log({ err });
+    process.exit(1);
 });
