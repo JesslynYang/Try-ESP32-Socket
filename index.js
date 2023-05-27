@@ -22,7 +22,26 @@ app.get('/', (req, res) => {
     });
 })
 
+
+const ProductQC = mongoose.model(
+    "ProductQC",
+    mongoose.Schema({
+        rfid_key: {
+            type: String,
+        },
+        humidity: {
+            type: String,
+        },
+        temperature: {
+            type: String,
+        },
+    })
+);
+
+
 app.get('/data', (req, res) => {
+    
+
     return res.status(200).json({
         title: "Express Testing",
         message: "The app is working properly!",
