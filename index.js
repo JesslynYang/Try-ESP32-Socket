@@ -38,12 +38,16 @@ const ProductQC = mongoose.model(
 );
 
 app.get('/data', async (req, res) => {
-    try {
-        const datas = await ProductQC.findOne()
-        return res.status(200).json({ datas });
-    } catch (err) {
-        res.status(500).json({ err })
-    }
+    return res.status(200).json({
+        title: "Express Testing",
+        message: "The app is working properly!",
+    });
+    // try {
+    //     const datas = await ProductQC.findOne()
+    //     return res.status(200).json({ datas });
+    // } catch (err) {
+    //     res.status(500).json({ err })
+    // }
 })
 
 
