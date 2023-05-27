@@ -22,20 +22,20 @@ app.get('/', (req, res) => {
     });
 })
 
-const ProductQC = mongoose.model(
-    "ProductQC",
-    mongoose.Schema({
-        rfid_key: {
-            type: String,
-        },
-        humidity: {
-            type: String,
-        },
-        temperature: {
-            type: String,
-        },
-    })
-);
+// const ProductQC = mongoose.model(
+//     "ProductQC",
+//     mongoose.Schema({
+//         rfid_key: {
+//             type: String,
+//         },
+//         humidity: {
+//             type: String,
+//         },
+//         temperature: {
+//             type: String,
+//         },
+//     })
+// );
 
 app.get('/data', async (req, res) => {
     return res.status(200).json({
