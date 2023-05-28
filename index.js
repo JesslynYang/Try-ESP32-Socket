@@ -53,6 +53,7 @@ app.post('/', (req, res) => {
     return res.status(200).json({
         title: "Express Testing",
         message: "The app is working properly!",
+        url: process.env.MONGODB_URL,
     });
 })
 
@@ -98,6 +99,8 @@ app.listen(port, () => {
 
 
 // const server = http.createServer(app);
+
+
 
 // mongoose.connect(process.env.MONGODB_URL).then(() => {
 //   console.log("Mongodb connected");
