@@ -1,70 +1,64 @@
 const express = require('express');
 const app = express();
-const cors = require('cors')
-const mongoose = require('mongoose')
-const http = require('http')
-const dotenv = require('dotenv')
-const cookieParser = require('cookie-parser')
-// const connectToMongoDB = require('./middlewares/connectToMongoDB')
-const dbConnect = require('./config/dbConn');
-dotenv.config()
+const cors = require('cors');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors())
 
 const ProductQC = mongoose.model(
-    "ProductQC",
-    mongoose.Schema({
-        rfid_key: {
-            type: String,
-        },
-        humidity: {
-            type: String,
-        },
-        temperature: {
-            type: String,
-        },
-    })
+  "ProductQC",
+  mongoose.Schema({
+    rfid_key: {
+      type: String,
+    },
+    humidity: {
+      type: String,
+    },
+    temperature: {
+      type: String,
+    },
+  })
 );
 
 // Connect to MongoDB
 const connectToDatabase = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log('MongoDB connected');
-    } catch (error) {
-        console.error('Failed to connect to MongoDB', error);
-    }
+  try {
+    await mongoose.connect(process.env.MONGODB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('MongoDB connected');
+  } catch (error) {
+    console.error('Failed to connect to MongoDB', error);
+  }
 };
 
 // Define your serverless function
 const serverlessFunction = async (req, res) => {
-    try {
-        const datas = await ProductQC.find()
-        // Your serverless function logic goes here
-        res.status(200).json({ 
-            message: 'Hello, World!',
-            datas,
-        });
-    } catch (error) {
-        console.error('Serverless function error', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+  try {
+    const datas = await ProductQC.find();
+    // Your serverless function logic goes here
+    res.status(200).json({ 
+      message: 'Hello, World!',
+      datas,
+    });
+  } catch (error) {
+    console.error('Serverless function error', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
 connectToDatabase().then(() => {
-    // Express route
-    app.get('/', serverlessFunction);
-
-    // Export the express app
-    // module.exports = app;
+  // Express route
+  app.get('/', serverlessFunction);
 });
+
 
 
 // app.get('/', async (req, res) => {
