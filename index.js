@@ -34,7 +34,7 @@ const ProductQC = mongoose.model(
 
 app.get('/', async (req, res) => {
     // await connectToDatabase()
-    // await dbConnect()
+    await dbConnect()
 
     // const datas = await ProductQC.find()
 
