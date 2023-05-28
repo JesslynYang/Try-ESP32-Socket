@@ -6,7 +6,8 @@ const http = require('http')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
 // const connectToMongoDB = require('./middlewares/connectToMongoDB')
-const { connectToDatabase } = require('./config/dbConn')
+const { connectToDatabase } = require('./config/dbConn');
+const dbConnect = require('./config/dbConn');
 dotenv.config()
 
 app.use(cors());
@@ -32,14 +33,15 @@ const ProductQC = mongoose.model(
 
 
 app.get('/', async (req, res) => {
-    await connectToDatabase()
+    // await connectToDatabase()
+    await dbConnect()
 
-    // const datas = await ProductQC.find()
+    const datas = await ProductQC.find()
 
     return res.status(200).json({
         title: "Express Testing",
         message: "The app is working properly!",
-        // datas,
+        datas,
     });
 })
 
