@@ -44,13 +44,26 @@ const ProductQC = mongoose.model(
 
 
 app.get('/', async (req, res) => {
-    // const datas = await ProductQC.find()
 
-    return res.status(200).json({
-        title: "Express Testing",
-        message: "The app is working properly!",
-        // datas,
+    mongoose.connect(process.env.MONGODB_URL).then(async () => {
+        //   console.log("Mongodb connected");
+        //   server.listen(port, () => {
+        //     console.log(`Server is listening on port ${port}`);
+        //   });
+
+        const datas = await ProductQC.find()
+
+        return res.status(200).json({
+            title: "Express Testing",
+            message: "The app is working properly!",
+            datas,
+        });
+    }).catch((err) => {
+        console.log({ err });
+        process.exit(1);
     });
+
+
 })
 
 
