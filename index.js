@@ -58,39 +58,43 @@ app.post('/', (req, res) => {
 
 const port = process.env.PORT || 5000;
 
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+});
+
 
 // Connect to MongoDB
-mongoose
-    .connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-        console.log("MongoDB connected");
-        // Start the server after successful MongoDB connection
-        startServer();
-    })
-    .catch((err) => {
-        console.error("Failed to connect to MongoDB", err);
-        process.exit(1);
-    });
+// mongoose
+//     .connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+//     .then(() => {
+//         console.log("MongoDB connected");
+//         // Start the server after successful MongoDB connection
+//         startServer();
+//     })
+//     .catch((err) => {
+//         console.error("Failed to connect to MongoDB", err);
+//         process.exit(1);
+//     });
 
-// Start the server
-function startServer() {
-    //   const http = require('http');
-    //   const port = process.env.PORT || 3000;
+// // Start the server
+// function startServer() {
+//     //   const http = require('http');
+//     //   const port = process.env.PORT || 3000;
 
-    //   const server = http.createServer((req, res) => {
-    //     res.statusCode = 200;
-    //     res.setHeader('Content-Type', 'text/plain');
-    //     res.end('Hello, World!');
-    //   });
+//     //   const server = http.createServer((req, res) => {
+//     //     res.statusCode = 200;
+//     //     res.setHeader('Content-Type', 'text/plain');
+//     //     res.end('Hello, World!');
+//     //   });
 
-    //   server.listen(port, () => {
-    //     console.log(`Server is listening on port ${port}`);
-    //   });
+//     //   server.listen(port, () => {
+//     //     console.log(`Server is listening on port ${port}`);
+//     //   });
 
-    app.listen(port, () => {
-        console.log(`Server listening on port ${port}`);
-    });
-}
+//     app.listen(port, () => {
+//         console.log(`Server listening on port ${port}`);
+//     });
+// }
 
 
 // const server = http.createServer(app);
