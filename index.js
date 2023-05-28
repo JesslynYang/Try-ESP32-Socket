@@ -6,7 +6,7 @@ const http = require('http')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
 const connectToMongoDB = require('./middlewares/connectToMongoDB')
-const connectDB = require('./config/dbConn')
+const { connectToDatabase } = require('./config/dbConn')
 dotenv.config()
 
 // app.use(express.static(__dirname + '/public'));
@@ -44,26 +44,15 @@ const ProductQC = mongoose.model(
 
 
 app.get('/', async (req, res) => {
+    await connectToDatabase()
 
-    mongoose.connect(process.env.MONGODB_URL).then(async () => {
-        //   console.log("Mongodb connected");
-        //   server.listen(port, () => {
-        //     console.log(`Server is listening on port ${port}`);
-        //   });
+    const datas = await ProductQC.find()
 
-        const datas = await ProductQC.find()
-
-        return res.status(200).json({
-            title: "Express Testing",
-            message: "The app is working properly!",
-            datas,
-        });
-    }).catch((err) => {
-        console.log({ err });
-        process.exit(1);
+    return res.status(200).json({
+        title: "Express Testing",
+        message: "The app is working properly!",
+        datas,
     });
-
-
 })
 
 

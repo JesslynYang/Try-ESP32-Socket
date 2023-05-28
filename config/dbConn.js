@@ -2,12 +2,21 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 dotenv.config()
 
-const connectDB = async () => {
-    mongoose.connect(process.env.MONGODB_URL, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-    })
-        .catch(err => console.err(err))
-}
+let isConnected;
 
-module.exports = connectDB
+exports.connectToDatabase = () => {
+    if (isConnected) {
+        console.log('=> using existing database connection');
+        return Promise.resolve();
+    }
+
+    console.log('=> using new database connection');
+    return mongoose.connect(process.env.MONGODB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        bufferCommands: false
+    })
+        .then(db => {
+            isConnected = db.connections[0].readyState;
+        });
+};
