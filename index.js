@@ -43,10 +43,10 @@ const connectToDatabase = async () => {
 const serverlessFunction = async (req, res) => {
     try {
         // const datas = await ProductQC.find();
-        // Your serverless function logic goes here
+        // // Your serverless function logic goes here
         // res.status(200).json({ 
         //   message: 'Hello, World!',
-        // //   datas,
+        //   datas,
         // });
 
         ProductQC.find().exec()
