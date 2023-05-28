@@ -39,6 +39,7 @@ const connectToDatabase = async () => {
     }
 };
 
+
 // Define your serverless function
 const serverlessFunction = async (req, res) => {
     try {
@@ -49,18 +50,19 @@ const serverlessFunction = async (req, res) => {
         //   datas,
         // });
 
-        ProductQC.find().exec()
-            .then(datas => {
-                // Handle the datas here
-                res.status(200).json({
-                    message: 'Hello, World!',
-                    datas,
-                });
-            })
-            .catch(error => {
-                console.error('Serverless function error', error);
-                res.status(500).json({ error: 'Internal Server Error' });
-            });
+        // ProductQC.find().exec()
+        //     .then(datas => {
+        //         // Handle the datas here
+        //         res.status(200).json({
+        //             message: 'Hello, World!',
+        //             datas,
+        //         });
+        //     })
+        //     .catch(error => {
+        //         console.error('Serverless function error', error);
+        //         res.status(500).json({ error: 'Internal Server Error' });
+        //     });
+
 
     } catch (error) {
         console.error('Serverless function error', error);
@@ -68,11 +70,42 @@ const serverlessFunction = async (req, res) => {
     }
 };
 
-connectToDatabase().then(() => {
-    // Express route
-    app.get('/', serverlessFunction);
-});
+// connectToDatabase().then(() => {
+//     // Express route
+//     app.get('/', serverlessFunction);
+// });
 
+
+app.get('/', (req, res) => {
+    connectToDatabase().then(async () => {
+        try {
+            const datas = await ProductQC.find();
+            // Your serverless function logic goes here
+            res.status(200).json({
+                message: 'Hello, World!',
+                datas,
+            });
+
+            // ProductQC.find().exec()
+            //     .then(datas => {
+            //         // Handle the datas here
+            //         res.status(200).json({
+            //             message: 'Hello, World!',
+            //             datas,
+            //         });
+            //     })
+            //     .catch(error => {
+            //         console.error('Serverless function error', error);
+            //         res.status(500).json({ error: 'Internal Server Error' });
+            //     });
+
+
+        } catch (error) {
+            console.error('Serverless function error', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    })
+})
 
 
 // app.get('/', async (req, res) => {
