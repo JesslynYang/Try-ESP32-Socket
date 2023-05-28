@@ -6,7 +6,7 @@ const http = require('http')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
 // const connectToMongoDB = require('./middlewares/connectToMongoDB')
-// const { connectToDatabase } = require('./config/dbConn')
+const { connectToDatabase } = require('./config/dbConn')
 dotenv.config()
 
 app.use(cors());
