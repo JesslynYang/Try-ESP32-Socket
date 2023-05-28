@@ -6,7 +6,6 @@ const http = require('http')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
 // const connectToMongoDB = require('./middlewares/connectToMongoDB')
-const { connectToDatabase } = require('./config/dbConn');
 const dbConnect = require('./config/dbConn');
 dotenv.config()
 
@@ -31,19 +30,49 @@ const ProductQC = mongoose.model(
     })
 );
 
+// Connect to MongoDB
+const connectToDatabase = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log('MongoDB connected');
+    } catch (error) {
+        console.error('Failed to connect to MongoDB', error);
+    }
+};
 
-app.get('/', async (req, res) => {
-    // await connectToDatabase()
-    await dbConnect()
+// Define your serverless function
+const serverlessFunction = async (req, res) => {
+    try {
+        // Your serverless function logic goes here
+        res.status(200).json({ message: 'Hello, World!' });
+    } catch (error) {
+        console.error('Serverless function error', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
-    // const datas = await ProductQC.find()
+connectToDatabase().then(() => {
+    // Express route
+    app.get('/', serverlessFunction);
 
-    return res.status(200).json({
-        title: "Express Testing",
-        message: "The app is working properly!",
-        // datas,
-    });
-})
+    // Export the express app
+    // module.exports = app;
+});
+
+
+// app.get('/', async (req, res) => {
+//     // await dbConnect()
+//     // const datas = await ProductQC.find()
+
+//     return res.status(200).json({
+//         title: "Express Testing",
+//         message: "The app is working properly!",
+//         // datas,
+//     });
+// })
 
 app.get('/data', (req, res) => {
     return res.status(200).json({
