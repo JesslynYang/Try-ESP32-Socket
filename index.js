@@ -5,6 +5,8 @@ const mongoose = require('mongoose')
 const http = require('http')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
+const connectToMongoDB = require('./middlewares/connectToMongoDB')
+const connectDB = require('./config/dbConn')
 dotenv.config()
 
 // app.use(express.static(__dirname + '/public'));
@@ -25,13 +27,7 @@ app.use(cookieParser());
 
 app.use(cors())
 
-app.get('/', (req, res) => {
-    return res.status(200).json({
-        title: "Express Testing",
-        message: "The app is working properly!",
-    });
-})
-
+connectDB()
 
 const ProductQC = mongoose.model(
     "ProductQC",
@@ -47,6 +43,19 @@ const ProductQC = mongoose.model(
         },
     })
 );
+
+
+app.get('/', async (req, res) => {
+    const datas = await ProductQC.find()
+
+    return res.status(200).json({
+        title: "Express Testing",
+        message: "The app is working properly!",
+        datas,
+    });
+})
+
+
 
 
 app.get('/data', (req, res) => {
