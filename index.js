@@ -44,9 +44,9 @@ const ProductQC = mongoose.model(
 
 
 app.get('/', async (req, res) => {
-    await connectToDatabase()
+    // await connectToDatabase()
 
-    const datas = await ProductQC.find()
+    // const datas = await ProductQC.find()
 
     return res.status(200).json({
         title: "Express Testing",
