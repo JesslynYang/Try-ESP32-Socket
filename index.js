@@ -13,6 +13,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+mongoose.connect(process.env.MONGODB_URL).then(() => {
+    //   console.log("Mongodb connected");
+    //   server.listen(port, () => {
+    //     console.log(`Server is listening on port ${port}`);
+    //   });
+}).catch((err) => {
+    console.log({ err });
+    process.exit(1);
+});
+
 app.use(cors())
 
 app.get('/', (req, res) => {
@@ -23,25 +33,23 @@ app.get('/', (req, res) => {
 })
 
 
-// const ProductQC = mongoose.model(
-//     "ProductQC",
-//     mongoose.Schema({
-//         rfid_key: {
-//             type: String,
-//         },
-//         humidity: {
-//             type: String,
-//         },
-//         temperature: {
-//             type: String,
-//         },
-//     })
-// );
+const ProductQC = mongoose.model(
+    "ProductQC",
+    mongoose.Schema({
+        rfid_key: {
+            type: String,
+        },
+        humidity: {
+            type: String,
+        },
+        temperature: {
+            type: String,
+        },
+    })
+);
 
 
 app.get('/data', (req, res) => {
-
-
     return res.status(200).json({
         title: "Express Testing",
         message: "The app is working properly!",
@@ -53,7 +61,7 @@ app.post('/', (req, res) => {
     return res.status(200).json({
         title: "Express Testing",
         message: "The app is working properly!",
-        url: process.env.MONGODB_URL,
+        // url: process.env.MONGODB_URL,
     });
 })
 
@@ -102,12 +110,3 @@ app.listen(port, () => {
 
 
 
-// mongoose.connect(process.env.MONGODB_URL).then(() => {
-//   console.log("Mongodb connected");
-// //   server.listen(port, () => {
-// //     console.log(`Server is listening on port ${port}`);
-// //   });
-// }).catch((err) => {
-//   console.log({ err });
-//   process.exit(1);
-// });
