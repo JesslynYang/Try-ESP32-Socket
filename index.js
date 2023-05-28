@@ -42,11 +42,11 @@ const connectToDatabase = async () => {
 // Define your serverless function
 const serverlessFunction = async (req, res) => {
   try {
-    const datas = await ProductQC.find();
+    // const datas = await ProductQC.find();
     // Your serverless function logic goes here
     res.status(200).json({ 
       message: 'Hello, World!',
-      datas,
+    //   datas,
     });
   } catch (error) {
     console.error('Serverless function error', error);
