@@ -27,8 +27,6 @@ app.use(cookieParser());
 
 app.use(cors())
 
-connectDB()
-
 const ProductQC = mongoose.model(
     "ProductQC",
     mongoose.Schema({
